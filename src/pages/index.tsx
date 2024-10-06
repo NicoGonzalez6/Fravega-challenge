@@ -1,21 +1,24 @@
 import { getUsers } from "@/services/user";
-import { User } from "@/services/user/user.types";
-import { ProfileCard, SectionWrapper } from "@/components";
+import { UsersResponseType } from "@/services/user/user.types";
+import { PageLayout, SectionWrapper, UserCard } from "@/components";
 import { useDebounce } from "@/hooks/useDebounce";
-import { Flex, Stack } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
+import { useFavoriteUserStore } from "@/hooks/useFavoriteUserStore";
+import Link from "next/link";
 
-const SEARCH_PARAM = "keyword";
+const SEARCH_PARAM = "username";
 
-export default function Home({ data }: { data: { users: User[] } }) {
+export default function Home({ data }: { data: { users: UsersResponseType[] } }) {
   const [value, setValue] = useState("");
-  const debounceValue = useDebounce({ value });
+  const debounceValue = useDebounce({ value, delay: 500 });
   const params = useSearchParams();
   const router = useRouter();
+  const { addToFavorite, favoriteUsers, removeFromFavorite, isFavoriteUserById } = useFavoriteUserStore();
 
   const searchUser = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -28,9 +31,7 @@ export default function Home({ data }: { data: { users: User[] } }) {
     } else {
       searchParams.delete(SEARCH_PARAM);
     }
-
     const queryString = searchParams.toString();
-
     if (queryString) {
       router.replace(`?${queryString}`);
     } else {
@@ -38,26 +39,39 @@ export default function Home({ data }: { data: { users: User[] } }) {
     }
   }, [debounceValue]);
 
+  const renderUsers = useCallback(() => {
+    return data?.users?.map((user) => (
+      <UserCard key={user.id} {...user} addToFavorite={() => addToFavorite(user)} removeFromFavorite={() => removeFromFavorite(user.id)} isFavorite={isFavoriteUserById(user.id)} />
+    ));
+  }, [data.users, favoriteUsers]);
+
   return (
-    <Stack gap={4}>
+    <PageLayout>
       <SectionWrapper title="Buscar usuario">
-        <Input w={350} size={"sm"} value={value} onChange={searchUser} />
+        <Input w={["100%", 350]} size={"sm"} value={value} onChange={searchUser} />
       </SectionWrapper>
       <SectionWrapper title="Usuarios">
-        <Flex gap={8} flexWrap={"wrap"}>
-          {data?.users?.map((user) => {
-            return <ProfileCard key={user.id} {...user} />;
-          })}
+        <Button colorScheme="blue" w={["100%", 200]} size={"sm"}>
+          <Link style={{ width: "100%" }} href={"/favorites"}>
+            Mis Favoritos
+          </Link>
+        </Button>
+        <Flex gap={8} flexWrap={"wrap"} justify={"space-evenly"}>
+          {renderUsers()}
         </Flex>
       </SectionWrapper>
-    </Stack>
+    </PageLayout>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { keyword } = context.query;
-  const users = await getUsers(keyword as string | undefined);
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { username } = ctx.query;
+  const users = await getUsers(username as string | undefined);
   return {
-    props: { data: users },
+    props: {
+      data: {
+        users,
+      },
+    },
   };
 };
