@@ -1,6 +1,7 @@
 import { getUsers } from "@/services/user";
 import { UsersResponseType } from "@/services/user/user.types";
-import { PageLayout, SectionWrapper, UserCard } from "@/components";
+import { SectionWrapper, UserCard } from "@/components";
+import { PageLayout } from "@/layouts";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Button, Flex } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
@@ -15,7 +16,7 @@ const SEARCH_PARAM = "username";
 
 export default function Home({ data }: { data: { users: UsersResponseType[] } }) {
   const [value, setValue] = useState("");
-  const debounceValue = useDebounce({ value, delay: 500 });
+  const debounceValue = useDebounce({ value, delay: 400 });
   const params = useSearchParams();
   const router = useRouter();
   const { addToFavorite, favoriteUsers, removeFromFavorite, isFavoriteUserById } = useFavoriteUserStore();
@@ -51,10 +52,8 @@ export default function Home({ data }: { data: { users: UsersResponseType[] } })
         <Input w={["100%", 350]} size={"sm"} value={value} onChange={searchUser} />
       </SectionWrapper>
       <SectionWrapper title="Usuarios">
-        <Button colorScheme="blue" w={["100%", 200]} size={"sm"}>
-          <Link style={{ width: "100%" }} href={"/favorites"}>
-            Mis Favoritos
-          </Link>
+        <Button as={Link} colorScheme="blue" w={["100%", 200]} size={"sm"} href={"/favorites"}>
+          Mis Favoritos
         </Button>
         <Flex gap={8} flexWrap={"wrap"} justify={"space-evenly"}>
           {renderUsers()}

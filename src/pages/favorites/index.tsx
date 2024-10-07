@@ -1,4 +1,5 @@
-import { PageLayout, SectionWrapper, UserCard } from "@/components";
+import { SectionWrapper, UserCard } from "@/components";
+import { PageLayout } from "@/layouts";
 import { useFavoriteUserStore } from "@/hooks/useFavoriteUserStore";
 import { Button, Flex } from "@chakra-ui/react";
 import Link from "next/link";

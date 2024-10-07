@@ -1,5 +1,5 @@
 import { Box, Image, Text, Stack, Button } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface UserCardProps {
   login: string;
@@ -11,9 +11,6 @@ interface UserCardProps {
 }
 
 export const UserCard = ({ login, avatar_url, addToFavorite, isFavorite, removeFromFavorite }: UserCardProps) => {
-  const router = useRouter();
-  const redirectToProfile = () => router.push(login);
-
   return (
     <Box borderWidth="1px" borderRadius="lg" p={4} maxW="sm" bg="white" boxShadow="md" w={200}>
       <Stack direction="column" align="center">
@@ -21,7 +18,7 @@ export const UserCard = ({ login, avatar_url, addToFavorite, isFavorite, removeF
         <Text fontWeight="bold" fontSize="xl" mt={4}>
           {login}
         </Text>
-        <Button colorScheme="blue" size={"sm"} w={"100%"} onClick={redirectToProfile}>
+        <Button as={Link} href={login} colorScheme="blue" size={"sm"} w={"100%"}>
           Ver Perfil
         </Button>
         <Button colorScheme="blue" size={"sm"} variant={"outline"} w={"100%"} onClick={isFavorite ? removeFromFavorite : addToFavorite}>
