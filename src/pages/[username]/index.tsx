@@ -2,7 +2,7 @@ import { ProfileCard, SectionWrapper } from "@/components";
 import { useFavoriteUserStore } from "@/hooks/useFavoriteUserStore";
 import { getUserByUsername } from "@/services";
 import { type UserResponseType } from "@/services/user/user.types";
-import { Button, Text } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import React from "react";
@@ -17,9 +17,14 @@ export default function UserDetails({ data }: { data: UserResponseType }) {
       ) : (
         <Text>No se encontro ningun usuario</Text>
       )}
-      <Button as={Link} href={"/"} colorScheme="blue" size={"sm"} w={["100%", 200]}>
-        Volver al inicio
-      </Button>
+      <Flex gap={4} flexWrap={"wrap"}>
+        <Button as={Link} href={"/"} colorScheme="blue" size={"sm"} w={["100%", 200]}>
+          Volver al inicio
+        </Button>
+        <Button as={Link} href={"/favorites"} colorScheme="blue" size={"sm"} w={["100%", 200]}>
+          Ir a mis favoritos
+        </Button>
+      </Flex>
     </SectionWrapper>
   );
 }

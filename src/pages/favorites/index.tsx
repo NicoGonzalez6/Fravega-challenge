@@ -21,11 +21,14 @@ export default function Favorites() {
         <Flex gap={8} flexWrap={"wrap"} justify={"center"} mt={4}>
           {renderUsers()}
         </Flex>
-        <Button colorScheme="blue" w={["100%", 200]} size={"sm"}>
-          <Link style={{ width: "100%" }} href={"/"}>
+        <Flex gap={4} flexWrap={"wrap"}>
+          <Button as={Link} href={"/"} colorScheme="blue" size={"sm"} w={["100%", 200]}>
             Volver al inicio
-          </Link>
-        </Button>
+          </Button>
+          <Button as={Link} href={"/favorites"} colorScheme="blue" size={"sm"} w={["100%", 200]}>
+            Ir a mis favoritos
+          </Button>
+        </Flex>
       </SectionWrapper>
     </PageLayout>
   );

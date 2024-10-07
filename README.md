@@ -1,40 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# GitHub User Search App
 
-## Getting Started
+## Descripción
 
-First, run the development server:
+Esta es una aplicación web construida con Next.js (page router) que permite buscar, listar y marcar como favoritos usuarios de GitHub. Utiliza la API de GitHub Users para obtener datos y presenta una interfaz intuitiva para interactuar con los usuarios.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Requisitos
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Home
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Obtiene una lista inicial de usuarios de la API de GitHub Users.
+- Muestra los usuarios en una lista con sus nombres y avatares.
+- Implementa un buscador que permite filtrar los usuarios haciendo peticiones a la API por nombre.
+- Cada usuario tiene un enlace a una página de detalle.
+- Permite marcar usuarios como favoritos (sin necesidad de persistir).
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Página de Detalle del Usuario
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Muestra los detalles de un usuario específico al hacer clic en él desde la página de listado (nombre, avatar, bio, repositorios, etc.).
+- Indica si el usuario es favorito y permite agregar o eliminarlo.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Tecnologías Utilizadas
 
-## Learn More
+- **Next.js**: Framework para React que permite la renderización del lado del servidor y generación de sitios estáticos.
+- **React**: Biblioteca para construir interfaces de usuario.
+- **API de GitHub**: Proporciona datos sobre los usuarios de GitHub.
+- **Chakra UI**: Para el estilo y diseño de la interfaz.
 
-To learn more about Next.js, take a look at the following resources:
+## Instalación
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clona el repositorio:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ````bash
+   git clone https://github.com/tu_usuario/github-user-search-app.git
+   cd github-user-search-app ```
 
-## Deploy on Vercel
+   ````
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Instala las dependencias::
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   npm install
+   ```
+
+1. Inicia la aplicación:
+   ```bash
+   npm run dev
+   ```
