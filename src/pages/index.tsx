@@ -1,27 +1,25 @@
 import { getUsers } from "@/services/user";
 import { UsersResponseType } from "@/services/user/user.types";
-import { SectionWrapper, UserCard } from "@/components";
+import { RenderCardsSection, SearchInput, SectionWrapper } from "@/components";
 import { PageLayout } from "@/layouts";
 import { useDebounce } from "@/hooks/useDebounce";
-import { Button, Flex, Text } from "@chakra-ui/react";
-import { Input } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
-import { useFavoriteUserStore } from "@/hooks/useFavoriteUserStore";
+import React, { useCallback, useEffect, useState } from "react";
+
 import Link from "next/link";
 
 const SEARCH_PARAM = "username";
 
 export default function Home({ data }: { data: { users: UsersResponseType[] } }) {
   const [value, setValue] = useState("");
-  const debounceValue = useDebounce({ value, delay: 400 });
+  const debounceValue = useDebounce({ value: value });
   const params = useSearchParams();
   const router = useRouter();
-  const { addToFavorite, favoriteUsers, removeFromFavorite, isFavoriteUserById } = useFavoriteUserStore();
 
-  const searchUser = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   }, []);
 
@@ -40,34 +38,16 @@ export default function Home({ data }: { data: { users: UsersResponseType[] } })
     }
   }, [debounceValue]);
 
-  const renderUsers = useCallback(() => {
-    return data?.users ? (
-      data?.users?.map((user) => (
-        <UserCard
-          key={user.id}
-          {...user}
-          addToFavorite={() => addToFavorite(user)}
-          removeFromFavorite={() => removeFromFavorite(user.id)}
-          isFavorite={isFavoriteUserById(user.id)}
-        />
-      ))
-    ) : (
-      <Text>Al parecer hubo un problema, por favor contacta con un administrador o intenta nuevamente</Text>
-    );
-  }, [data.users, favoriteUsers]);
-
   return (
     <PageLayout>
       <SectionWrapper title="Buscar usuario">
-        <Input w={["100%", 350]} size={"sm"} value={value} onChange={searchUser} />
+        <SearchInput value={value} onChange={handleInputChange} />
       </SectionWrapper>
       <SectionWrapper title="Usuarios">
         <Button as={Link} colorScheme="blue" w={["100%", 200]} size={"sm"} href={"/favorites"}>
           Mis Favoritos
         </Button>
-        <Flex gap={8} flexWrap={"wrap"} justify={"space-evenly"}>
-          {renderUsers()}
-        </Flex>
+        <RenderCardsSection data={data} />
       </SectionWrapper>
     </PageLayout>
   );
