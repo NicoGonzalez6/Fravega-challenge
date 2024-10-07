@@ -1,6 +1,7 @@
 import { API_URL } from "@/constants";
 import { UserResponseType, UsersResponseType } from "./user.types";
 import axios, { AxiosResponse } from "axios";
+import { serializeAxiosError } from "@/utils";
 
 /**
  * Fetches users from the GitHub API based on a search keyword.
@@ -8,7 +9,7 @@ import axios, { AxiosResponse } from "axios";
  * @param {string | undefined} keyword - The keyword to search for users. If undefined, fetches all users.
  * @returns {Promise<UsersResponseType[]>} A promise that resolves to an array of User objects.
  */
-export const getUsers = async (keyword: string | undefined): Promise<UsersResponseType[] | null> => {
+export const getUsers = async (keyword: string | undefined): Promise<UsersResponseType[] | string> => {
   try {
     let users;
     if (keyword) {
@@ -20,8 +21,8 @@ export const getUsers = async (keyword: string | undefined): Promise<UsersRespon
     }
     return users;
   } catch (error) {
-    console.error(`Error fetching user: ${error}`);
-    return null;
+    const errorMessage = serializeAxiosError(error);
+    return errorMessage;
   }
 };
 
@@ -31,12 +32,12 @@ export const getUsers = async (keyword: string | undefined): Promise<UsersRespon
  * @param {string} keyword - The username to search for user.
  * @returns {Promise<UserResponseType>} A promise that resolves to a User objects.
  */
-export const getUserByUsername = async (username: string): Promise<UserResponseType | null> => {
+export const getUserByUsername = async (username: string): Promise<UserResponseType | string> => {
   try {
     const res = await axios.get<UserResponseType>(`${API_URL}/users/${username}`);
     return res.data;
   } catch (error) {
-    console.error(`Error fetching user: ${error}`);
-    return null;
+    const errorMessage = serializeAxiosError(error);
+    return errorMessage;
   }
 };

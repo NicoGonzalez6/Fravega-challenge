@@ -3,7 +3,7 @@ import { UsersResponseType } from "@/services/user/user.types";
 import { UserCardsSection, SearchInput, SectionWrapper } from "@/components";
 import { PageLayout } from "@/layouts";
 import { useDebounce } from "@/hooks/useDebounce";
-import { Button } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const SEARCH_PARAM = "username";
 
-export default function Home({ data }: { data: { users: UsersResponseType[] } }) {
+export default function Home({ data }: { data: UsersResponseType[] | string }) {
   const [value, setValue] = useState("");
   const debounceValue = useDebounce({ value: value });
   const params = useSearchParams();
@@ -47,7 +47,7 @@ export default function Home({ data }: { data: { users: UsersResponseType[] } })
         <Button as={Link} colorScheme="blue" w={["100%", 200]} size={"sm"} href={"/favorites"}>
           Mis Favoritos
         </Button>
-        <UserCardsSection data={data} />
+        {typeof data === "string" ? <Text>{data}</Text> : <UserCardsSection data={data} />}
       </SectionWrapper>
     </PageLayout>
   );
@@ -56,11 +56,10 @@ export default function Home({ data }: { data: { users: UsersResponseType[] } })
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { username } = ctx.query;
   const response = await getUsers(username as string | undefined);
+
   return {
     props: {
-      data: {
-        users: response,
-      },
+      data: response,
     },
   };
 };

@@ -4,12 +4,12 @@ import { UserCard } from "../UserCard/UserCard";
 import { useFavoriteUserStore } from "@/hooks/useFavoriteUserStore";
 import { UsersResponseType } from "@/services/user/user.types";
 
-export const UserCardsSection = memo(({ data }: { data: { users: UsersResponseType[] } }) => {
+export const UserCardsSection = memo(({ data }: { data: UsersResponseType[] }) => {
   const { addToFavorite, removeFromFavorite, isFavoriteUserById } = useFavoriteUserStore();
   return (
     <Flex gap={8} flexWrap={"wrap"} justify={"space-evenly"}>
-      {data?.users?.length >= 1 ? (
-        data?.users?.map((user) => (
+      {data?.length >= 1 ? (
+        data?.map((user) => (
           <UserCard
             key={user.id}
             {...user}
