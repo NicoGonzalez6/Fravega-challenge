@@ -1,7 +1,7 @@
 import axios from "axios";
 
 /**
- * Serializes Axios errors into a user-friendly message.
+ * Serializes Axios errors into a user-friendly message. this is a very basic implementation
  *
  * @param {unknown} error - The error object to serialize.
  * @returns {string} A user-friendly error message.
