@@ -1,6 +1,6 @@
 import { getUsers } from "@/services/user";
 import { UsersResponseType } from "@/services/user/user.types";
-import { RenderCardsSection, SearchInput, SectionWrapper } from "@/components";
+import { UserCardsSection, SearchInput, SectionWrapper } from "@/components";
 import { PageLayout } from "@/layouts";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Button } from "@chakra-ui/react";
@@ -47,7 +47,7 @@ export default function Home({ data }: { data: { users: UsersResponseType[] } })
         <Button as={Link} colorScheme="blue" w={["100%", 200]} size={"sm"} href={"/favorites"}>
           Mis Favoritos
         </Button>
-        <RenderCardsSection data={data} />
+        <UserCardsSection data={data} />
       </SectionWrapper>
     </PageLayout>
   );

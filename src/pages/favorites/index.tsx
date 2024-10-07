@@ -1,4 +1,4 @@
-import { RenderCardsSection, SectionWrapper } from "@/components";
+import { UserCardsSection, SectionWrapper } from "@/components";
 import { PageLayout } from "@/layouts";
 import { useFavoriteUserStore } from "@/hooks/useFavoriteUserStore";
 import { Button, Flex } from "@chakra-ui/react";
@@ -12,7 +12,7 @@ export default function Favorites() {
   return (
     <PageLayout>
       <SectionWrapper title="Usuarios">
-        <RenderCardsSection data={{ users: favoriteUsers }} />
+        <UserCardsSection data={{ users: favoriteUsers }} />
         <Flex gap={4} flexWrap={"wrap"}>
           <Button as={Link} href={"/"} colorScheme="blue" size={"sm"} w={["100%", 200]}>
             Volver al inicio

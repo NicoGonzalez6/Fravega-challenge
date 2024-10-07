@@ -4,7 +4,7 @@ import { UserCard } from "../UserCard/UserCard";
 import { useFavoriteUserStore } from "@/hooks/useFavoriteUserStore";
 import { UsersResponseType } from "@/services/user/user.types";
 
-export const RenderCardsSection = memo(({ data }: { data: { users: UsersResponseType[] } }) => {
+export const UserCardsSection = memo(({ data }: { data: { users: UsersResponseType[] } }) => {
   const { addToFavorite, removeFromFavorite, isFavoriteUserById } = useFavoriteUserStore();
   console.log("test");
 
