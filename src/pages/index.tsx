@@ -76,7 +76,6 @@ export default function Home({ data }: { data: { users: UsersResponseType[] } })
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { username } = ctx.query;
   const response = await getUsers(username as string | undefined);
-
   return {
     props: {
       data: {

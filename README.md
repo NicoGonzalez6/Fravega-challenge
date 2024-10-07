@@ -31,7 +31,7 @@ Esta es una aplicación web construida con Next.js (page router) que permite bus
 1. Clona el repositorio:
 
    ````bash
-   git clone https://github.com/tu_usuario/github-user-search-app.git
+   git clone https://github.com/NicoGonzalez6/Fravega-challenge.git
    cd github-user-search-app ```
 
    ````
