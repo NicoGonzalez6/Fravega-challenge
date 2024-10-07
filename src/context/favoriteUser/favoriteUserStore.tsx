@@ -1,5 +1,5 @@
-import { UsersResponseType } from "@/services/user/user.types";
 import React, { createContext, useState, useCallback, useMemo } from "react";
+import { UsersResponseType } from "@/services/user/user.types";
 
 interface FavoriteUserStoreContextType {
   favoriteUsers: UsersResponseType[];
