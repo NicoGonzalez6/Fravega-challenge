@@ -48,7 +48,7 @@ Esta es una aplicación web construida con Next.js (page router) que permite bus
    npm run dev
    ```
 
-4. Abre otro terminal y corre los tests de Cypress (asegúrate de que el servidor esté levantado)::
+4. Abrir otro terminal y corre los tests de Cypress (asegúrate de que el servidor esté levantado)::
 
    ```bash
    npm run cypress:open para levantar los test con la ui de cypress
