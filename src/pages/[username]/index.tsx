@@ -26,6 +26,7 @@ export default function UserDetails({ data }: { data: UserResponseType }) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const response = await getUserByUsername(ctx.params?.username as string);
+
   return {
     props: {
       data: response,

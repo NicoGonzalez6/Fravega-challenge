@@ -3,7 +3,7 @@ import { UsersResponseType } from "@/services/user/user.types";
 import { SectionWrapper, UserCard } from "@/components";
 import { PageLayout } from "@/layouts";
 import { useDebounce } from "@/hooks/useDebounce";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { useSearchParams } from "next/navigation";
@@ -41,9 +41,19 @@ export default function Home({ data }: { data: { users: UsersResponseType[] } })
   }, [debounceValue]);
 
   const renderUsers = useCallback(() => {
-    return data?.users?.map((user) => (
-      <UserCard key={user.id} {...user} addToFavorite={() => addToFavorite(user)} removeFromFavorite={() => removeFromFavorite(user.id)} isFavorite={isFavoriteUserById(user.id)} />
-    ));
+    return data?.users ? (
+      data?.users?.map((user) => (
+        <UserCard
+          key={user.id}
+          {...user}
+          addToFavorite={() => addToFavorite(user)}
+          removeFromFavorite={() => removeFromFavorite(user.id)}
+          isFavorite={isFavoriteUserById(user.id)}
+        />
+      ))
+    ) : (
+      <Text>Al parecer hubo un problema, por favor contacta con un administrador o intenta nuevamente</Text>
+    );
   }, [data.users, favoriteUsers]);
 
   return (
@@ -65,11 +75,12 @@ export default function Home({ data }: { data: { users: UsersResponseType[] } })
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { username } = ctx.query;
-  const users = await getUsers(username as string | undefined);
+  const response = await getUsers(username as string | undefined);
+
   return {
     props: {
       data: {
-        users,
+        users: response,
       },
     },
   };
