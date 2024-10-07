@@ -6,8 +6,6 @@ import { UsersResponseType } from "@/services/user/user.types";
 
 export const UserCardsSection = memo(({ data }: { data: { users: UsersResponseType[] } }) => {
   const { addToFavorite, removeFromFavorite, isFavoriteUserById } = useFavoriteUserStore();
-  console.log("test");
-
   return (
     <Flex gap={8} flexWrap={"wrap"} justify={"space-evenly"}>
       {data?.users?.length >= 1 ? (

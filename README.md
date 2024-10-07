@@ -36,13 +36,23 @@ Esta es una aplicación web construida con Next.js (page router) que permite bus
 
    ````
 
-1. Instala las dependencias::
+2. Instala las dependencias::
 
    ```bash
    npm install
    ```
 
-1. Inicia la aplicación:
+3. Inicia la aplicación:
+
    ```bash
    npm run dev
+   ```
+
+4. Abre otro terminal y corre los tests de Cypress (asegúrate de que el servidor esté levantado)::
+
+   ```bash
+   npm run cypress:open para levantar los test con la ui de cypress
+
+   npm run cypress:run para levantar los test sin la ui de cypress
+
    ```

@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress:open": "cross-env BASE_URL_PORT=3000 cypress open --e2e --config-file ./cypress.config.ts",
+    "cypress:run": "cross-env BASE_URL_PORT=3000 cypress run --e2e --config-file ./cypress.config.ts"
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.4.1",
@@ -14,6 +16,7 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "axios": "^1.7.7",
+    "cross-env": "^7.0.3",
     "framer-motion": "^11.11.1",
     "next": "14.2.14",
     "react": "^18",
@@ -24,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cypress": "^13.15.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.14",
     "typescript": "^5"

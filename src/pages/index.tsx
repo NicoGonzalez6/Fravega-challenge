@@ -40,10 +40,10 @@ export default function Home({ data }: { data: { users: UsersResponseType[] } })
 
   return (
     <PageLayout>
-      <SectionWrapper title="Buscar usuario">
+      <SectionWrapper title="Buscar usuario" testId="searchInputSection">
         <SearchInput value={value} onChange={handleInputChange} />
       </SectionWrapper>
-      <SectionWrapper title="Usuarios">
+      <SectionWrapper title="Usuarios" testId="usersSection">
         <Button as={Link} colorScheme="blue" w={["100%", 200]} size={"sm"} href={"/favorites"}>
           Mis Favoritos
         </Button>
